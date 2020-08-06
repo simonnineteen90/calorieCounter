@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    padding:0;
+}
+
+.topContainer {
+    height:100%;
+    width: 100%;
+    background-color: darkgray;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.calContainer {
+    width: 50%;  
+    margin-top: 20px;  
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+
+    background-color:rgba(209, 209, 209, .4);
+    
+}
+
