@@ -5,7 +5,8 @@ body {
 }
 
 .topContainer {
-    height:50%;
+    height:100%;
+    width: 100%;
     background-color: darkgray;
 
     display: flex;
@@ -14,13 +15,16 @@ body {
     flex-direction: column;
 }
 
-.lowerContainer {
-    height: 50%;
-    background-color: lightgray;
-    
+.calContainer {
+    width: 50%;  
+    margin-top: 20px;  
+
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
+
+    background-color:rgba(209, 209, 209, .4);
+    
 }
 

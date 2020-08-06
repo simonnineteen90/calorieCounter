@@ -12,26 +12,31 @@
 
    <div class="topContainer">
         <h1>Calorie Counter</h1>
-        <p id="totalCals" >Total calories: 000</p>
+        <p class="totalCals" >Total calories: 000</p>
+
+
+        <div class="inputContainer"> 
+            <input class="add__des" type="text" placeholder="Enter type">
+            <input class="add__value" type="number" placeholder="Enter value">
+            <button class="add__btn">Add</button>
+        </div>
+
+      <!--   <div class="calContainer">
+            <p>%Type%</p>
+            <p>%number%</p>
+            <button class="del_btn">Delete</button>
+        </div> -->
+
+       
+       
+
     </div>
    
-   <div id ="wrapper" class="lowerContainer">
-
-       <div class="inputContainer">
-            <input class="add__value" type="number" placeholder="Enter value">
-       </div>
-    
-       <div class="inputContainer">
-            <input id="userInput_1" type="number" placeholder="Enter value">
-       </div>
-    
-       <button id = "calcBtn">Calculate value</button>
-
-   </div>
+   
 
    
 
 <!-- change the JS file for versions -->
-    <script src="app_3.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

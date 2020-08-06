@@ -1,27 +1,11 @@
-// convert app.js file into version using modules
-
+// working toward being able to add multiple values - now using github for this
 
 
 /***********
- Progress: working so far 
- 1. need to add the calcVal function to the data controller
 
- ** currently stuck because the calcVal function is returning NaN for the two user input values
- ** resolved this, was calling the function in the wrong place
+Following Jonas course now
+continue from video 83 add to UI
 
- 2. work out how to sum the value totals, consider if data stored correctly in myObject
-    try to put everything through the app controller as it has access to both other modules   
- 3. split the calcVal function so that the DOM change to show total is a seperate function
-
- 22/7/20 All of above done
-
- 4. redesign
-
- 5. add option to add extra inputs -- this might be hard
-
- 6. user can add a target value
-
- 7. once total calculated UI updated to show if you are under or above
 
 */
 
@@ -30,36 +14,81 @@
 //********* Data Module **********
 var dataController = (function() {
 
-    var x = 100;
+    var Calorie = function(id, description, value) {
+        this.id = id;
+        this.description = description;
+        this.value = value;
+
+    }
+   
+    var data = {
+        allCalories: [],
+        totalCals: 0
+    }
+
+    
+
 
     // everything in this return is available for use outside the module
     return {
-        
-        // 'for in loop' iterates over the object passed in, checks if object key has a property
-        // if it has a property then the it is added to the sum variable 
+        addItem: function(des, val) {
+            var newItem, ID;
+            
+            // create the new ID
+            if (data.allCalories.length > 0 ){
+                ID = data.allCalories[data.allCalories.length - 1].id + 1;
+                
+            } else {
+                ID = 0;
+            }
+            
 
-        calcVal: function(object){
-                var sum = 0
-                for( var el in object ) {
-                    if( object.hasOwnProperty(el) ) {
-                        sum += object[el]
-                    }
-                }
-                console.log('User inputed values are equal to: ' + sum)
-                return sum 
+            // create a new calorie ID
+            newItem = new Calorie(ID, des, val);
 
-            //console.log(object)
+            // push item to the data structure 
+            data.allCalories.push(newItem);
+
+            return newItem;
+
         },
 
-        // this is a test
-        // use dataController.add() to test in console
-        add: function() {
-            var y, z
-            y = 1
-            z = x + y
-            return z
-        }
+        deleteItem: function(id) {
+            var index, ids;
+            ids = data.allCalories.map(function(current){
+                return current.id
+            })
 
+            index = ids.indexOf(id);
+
+            if (index !== -1) {
+                data.allCalories.splice(index,1)
+            }
+
+
+        },
+
+        calculateBudget: function() {
+            var sum
+            sum = 0
+
+            data.allCalories.forEach(function(cur){
+                sum += cur.value 
+            })
+            data.totalCals = sum;
+
+        },
+
+        getBudget: function() {
+            return {
+                total: data.totalCals
+            }
+        },
+
+        testing: function() {
+            console.log(data);
+        }
+        
     }
 
 })();
@@ -71,22 +100,57 @@ var userInterfaceController =(function(){
 
     // everything in this return is available for use outside the module
     return {
-        // get the user inputs and stores them in an object
+        // get the user input and store them in an object
         getValue: function() {
-            var myObject
-
-            myObject = {}
-
-            myObject.input_0 = parseFloat(document.getElementById('userInput_0').value)
-            myObject.input_1 = parseFloat(document.getElementById('userInput_1').value)
             
-
-            return myObject
+            return {
+                des: document.querySelector('.add__des').value,
+                value: parseFloat(document.querySelector('.add__value').value)
+            }
         },
 
-        displayTotal: function(param) {
-            document.getElementById('totalCals').textContent = 'Total calories: ' + param
+        addListItem: function(obj) {
+            var html, newHtml
+            // set the html to be inserted
+            html = '<div class="calContainer" id="cal-%id%"><p>%des%</p><p>%value%</p><button class="del_btn">Delete</button></div>'
+            // create the new html string with data inserted
+            
+            newHtml = html.replace('%des%', obj.description);
+            newHtml = newHtml.replace('%value%', obj.value);
+            newHtml = newHtml.replace('%id%', obj.id);
+            //insert the html after teh last child element
+            document.querySelector('.topContainer').insertAdjacentHTML('beforeend', newHtml);
+
+        },
+
+        deleteListItem: function(selectorID) {
+            var element 
+            // get the element by ID
+            element = document.getElementById(selectorID)
+            // select the elements parent node then remove the element
+            element.parentNode.removeChild(element)
+        },
+
+        clearInputs: function() {
+            var fields;
+            // get the dom elements
+            fields = document.querySelectorAll('.add__des' + ', ' + '.add__value');
+            // convert list into a array
+            fieldsArr = Array.prototype.slice.call(fields)
+            // loop over each item of list and set value back to 0
+            fieldsArr.forEach(function(current, index, array){
+                current.value = "";
+                // focus back on the description element for quick inputs
+                document.querySelector('.add__des').focus();
+            })
+
+        },
+
+        displayTotal: function(obj){
+            document.querySelector('.totalCals').textContent = obj.total;
         }
+
+
 
 
 
@@ -102,31 +166,89 @@ var userInterfaceController =(function(){
 var appController = (function(UICtrl, dataCtrl){
 
     var eventListeners = function() {
-        // listen for any changes in the div called wrapper, then execute function
-        // this is for the user inputs
-        document.getElementById('wrapper').addEventListener('change', UICtrl.getValue);
+        // when add button clicked, fire the function
+        document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
        
-       //when button clicked run the updateTotal function
-       document.getElementById('calcBtn').addEventListener('click', updateTotal);
+       //when enter key pressed, call function
+       document.addEventListener('keypress', function(event){
+           if (event.keycode === 13 || event.which === 13 ) {
+               ctrlAddItem();
+           }
+
+           document.querySelector('.topContainer').addEventListener('click', ctrlDeleteItem);
+       })
+
+       
+
+
     }
 
-    // assign the getValue function that returns an object to this variable 
-    // NOTE that you do not call the function here
-    var userInputObject = UICtrl.getValue
+    var updateCals = function() {
 
-    //  assigns the data controller function calcVal to this var 
-  /*   var ctrlCalcVal = function() {
-        // the function is called here
-        dataCtrl.calcVal(userInputObject())
-    } */
+        // 1. calc the budget
+        dataCtrl.calculateBudget();
 
-    var updateTotal = function() {
-        // calculate the total, and assign to a variable
-        var totalCals = dataController.calcVal(userInputObject())
+        // 2. return budget
+        var totalCalories = dataCtrl.getBudget();
 
-        // pass the variable into the display total function
-        UICtrl.displayTotal(totalCals)
+       // 3. display the budget
+        UICtrl.displayTotal(totalCalories);
     }
+
+
+
+    var ctrlAddItem = function(){
+        var input, newItem
+
+        // 1. get the input values
+        input = UICtrl.getValue();
+        
+        // only run if parameters met
+        if (input.des !== "" && !isNaN(input.value) && input.value > 0) {
+
+            // 2. add item to the data 
+            newItem = dataCtrl.addItem(input.des, input.value);
+
+            // 3. add item to the UI
+            newUIelement =  UICtrl.addListItem(newItem);
+
+            // 4. clear the fields
+            UICtrl.clearInputs();
+
+            //5. update the total calories
+            updateCals();
+
+        }
+
+        
+    }
+
+    var ctrlDeleteItem = function(event){
+      var itemID
+
+        itemID = event.target.parentNode.id;
+       
+        if(itemID) {
+            // convert itemID from a string
+            splitID = itemID.split('-');
+            ID = parseFloat(splitID[1]); 
+
+            // 1. delete from data structure
+            dataCtrl.deleteItem(ID);
+
+
+            // 2. delete from UI
+            UICtrl.deleteListItem(itemID)
+
+            // 3 update budget
+            updateCals();
+
+        }
+        
+        
+
+    }
+
 
 
 
