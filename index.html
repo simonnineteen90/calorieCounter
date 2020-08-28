@@ -5,21 +5,63 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4ee347f91d.js" crossorigin="anonymous"></script>
+
+
+
 </head>
 <body>
-   
+   <header>
+       <div class="nav">
+            <div class="title">Cal Counter</div>
+            <div class="logo"><i class="fas fa-chart-line"></i></div>
+       </div>
+       
+   </header>
 
 
    <div class="topContainer">
-        <h1>Calorie Counter</h1>
-        <p class="totalCals" >Total calories: 000</p>
+        
+        <div class="circleContainer">
+                <div class="circle">
+                    <p class="totalCals" >1230</p>
+                </div>
+        </div>
+       
 
+        
+
+
+        <!-- <div class="inputContainer"> 
+            <input class="add__des" type="text" placeholder="Type">
+            <input class="add__value" type="number" placeholder="Value">
+            <button class="add__btn"><i class="far fa-check-circle"></i></button>
+        </div> -->
+
+
+    <div class="calorieGridCont">
 
         <div class="inputContainer"> 
-            <input class="add__des" type="text" placeholder="Enter type">
-            <input class="add__value" type="number" placeholder="Enter value">
-            <button class="add__btn">Add</button>
+            <input class="add__des" type="text" placeholder="Type">
+            <input class="add__value" type="number" placeholder="Value">
+            <button class="add__btn"><i class="far fa-check-circle"></i></button>
         </div>
+
+        <div class="calContainer calContainerHeading">
+            <p>Type</p>
+            <p>Value</p>
+            <button class="del_btn"> </button>
+            <div class="divider">
+                <hr>
+            </div>
+        </div> 
+
+    </div>
+
+
+        
+
 
       <!--   <div class="calContainer">
             <p>%Type%</p>
