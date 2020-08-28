@@ -112,14 +112,14 @@ var userInterfaceController =(function(){
         addListItem: function(obj) {
             var html, newHtml
             // set the html to be inserted
-            html = '<div class="calContainer" id="cal-%id%"><p>%des%</p><p>%value%</p><button class="del_btn">Delete</button></div>'
+            html = '<div class="calContainer" id="cal-%id%"><p>%des%</p><p>%value%</p><i class="fas fa-backspace"></i></div>'
             // create the new html string with data inserted
             
             newHtml = html.replace('%des%', obj.description);
             newHtml = newHtml.replace('%value%', obj.value);
             newHtml = newHtml.replace('%id%', obj.id);
             //insert the html after teh last child element
-            document.querySelector('.topContainer').insertAdjacentHTML('beforeend', newHtml);
+            document.querySelector('.calorieGridCont').insertAdjacentHTML('beforeend', newHtml);
 
         },
 
@@ -258,6 +258,9 @@ var appController = (function(UICtrl, dataCtrl){
             //tests
 
             eventListeners()
+            
+            // added this in to reset calories to 0 before starting
+            updateCals()
             
 
         },

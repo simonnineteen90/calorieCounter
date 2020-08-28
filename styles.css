@@ -1,30 +1,283 @@
+/* VARIABLES */
+
+:root {
+    /* Colours */
+    --light-grey: rgba(245,245,245,1);
+    --mid-grey: rgba(100,100,100,1);
+    --dark-grey: rgba(34,34,34,1);
+
+    --red: rgba(213,52,57);
+    
+    --light-blue: rgba(75,171,231);
+    --dark-blue: rgba(77,116,168);
+
+    /* FONTS */
+    --main-font: 'Inter', sans-serif;
+    --bold-font: 800;
+    --light-font: 400;
+
+}
+
+
+
+
+
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--main-font);
+    font-weight: var(--bold-font);
+
+    background-color: var(--light-grey);
     margin:0;
     padding:0;
 }
 
+
+/* ***** NAV BAR ***** */
+header {
+    width: 100%;
+}
+
+.nav {
+    max-width: 1024px;
+    margin:0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+    color: var(--dark-blue);
+
+}
+
+.logo {
+    text-align: right;
+    margin: 25px 25px 0 0 ;
+    font-size: 22px;
+}
+
+.title {
+    margin: 25px 0 0 25px ;
+}
+
+
+/* ***** CIRCLE + TOTAL ***** */
 .topContainer {
     height:100%;
     width: 100%;
-    background-color: darkgray;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    /* display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows:minmax(100px, auto); 
+    grid-gap:10px; */
+
 }
 
-.calContainer {
-    width: 50%;  
-    margin-top: 20px;  
+.circleContainer{
+    height: 250px;
 
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
-    flex-direction: row;
-
-    background-color:rgba(209, 209, 209, .4);
+    justify-content: center;
     
 }
+
+.circle {
+    /* grid-column: 1 ;
+    grid-row: 1; */
+
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: solid 5px var(--dark-blue);
+    background-color: var(--light-grey);
+    box-shadow: 0 3px 6px rgba(0,0,0, .3);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.totalCals {
+    font-weight: var(--light-font);
+    color: var(--dark-blue);
+    font-size: 36px; 
+}
+
+
+/* ***** INPUTS ***** */
+
+
+
+.inputContainer {
+  
+    min-height: 0;  
+    min-width: 0; 
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 200px 75px 40px; 
+    /* grid-template-columns:4fr 1fr 10px;  */
+    grid-gap: 5px;
+    
+
+}
+
+input {
+    height: 32px;
+    /* width: 100px; */
+
+    font: var(--main-font);
+    font-weight: var(--light-font);
+    font-size: 16px;
+    
+
+    background-color: rgb(223, 222, 222);
+    border: 1px solid ;
+    border-color: rgb(223, 222, 222);  
+    border-radius: 5px;
+    
+    padding: 2px;
+
+}
+
+ input:focus{
+    outline: none;
+    border: 1px solid var(--light-blue);
+    box-shadow: 0 2px 2px rgba(0,0,0, .1);
+    
+    
+} 
+
+button{
+    border:none;
+    background: none;
+}
+
+button:focus {
+    outline: none;
+    border: none;
+    color: var(--light-blue);
+}
+
+.fa-check-circle{
+    font-size: 18px;
+    color: var(--dark-blue);
+    
+}
+
+.fa-check-circle:focus{
+    font-size: 18px;
+    color: var(--dark-blue);
+    
+}
+
+.fa-check-circle:hover {
+    font-size: 18px;
+    color: var(--light-blue);
+}
+
+.add__des {
+    /* width: 150px; */
+    margin: 5px;
+}
+
+
+
+.add__value {
+    /* width: 75px; */
+    margin: 5px;
+
+}
+
+.add__btn {
+    margin-top: 12px;
+    padding:0;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+    
+}
+
+
+/* ***** CALORIE VALUES ***** */
+
+
+/* using flexbox
+.calContainer {
+    margin:0;
+
+    display: flex;
+    align-items: top;
+    justify-content: space-evenly;
+
+} */
+
+
+
+.calorieGridCont {
+    margin: 0;
+    width: 100%;
+
+    display: grid;
+    grid-template-rows: 75px repeat(4, 40px);
+    grid-gap: 5px;
+    
+}
+
+
+.calContainer {
+    display:grid;
+
+    grid-template-columns:200px 75px 40px; 
+    grid-gap: 5px;
+    margin: 0 auto;
+
+    font-weight: var(--bold-font);
+    text-transform: capitalize;
+
+}
+
+.calContainer p {
+    margin:5px 5px 5px 10px;
+    padding: 1px;    
+    font-size:16px;
+
+}
+
+.content{
+    display:flex;
+    align-content: center;
+}
+
+.calContainer button {
+    margin:0;
+    padding:0;
+}
+
+.calContainerHeading p {
+    margin:5px 5px 5px 10px;
+    padding: 1px;
+
+    font-weight: var(--light-font);
+    font-size:16px;
+    
+
+
+}
+
+.divider hr {
+    border-bottom: 1px solid;
+    border-color: rgba(178,175,175, .3);
+    width: 310px;
+    margin: -8px 0 0 10px;
+}
+
+/* Delete Icon */
+.fa-backspace {
+    margin: 8px 0 0 5px;
+    color: var(--red);
+}
+
+
 
